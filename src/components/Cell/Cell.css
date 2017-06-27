@@ -1,0 +1,17 @@
+.Cell {
+  background-color: rgba(100, 100, 100, .5);
+  display: block;
+  height: 60px;
+}
+
+.Cell-10 {
+  width: calc(100% / 10);
+}
+
+.Cell-11 {
+  width: calc(100% / 11);
+}
+
+.Cell.main {
+  background-color: rgba(100, 100, 100, 1);
+}

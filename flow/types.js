@@ -1,5 +1,5 @@
 // @flow
-
 type Config = {
-  size: number;
+  selected: number,
+  size: number
 };

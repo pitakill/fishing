@@ -3,10 +3,10 @@
 verifyExists() {
   if ! [ -L $1 ]; then
     case $1 in
-      @)
-        ln -s $PWD/src ln -s $PWD/node_modules/@
+      $PWD/node_modules/@)
+        ln -s $PWD/src $PWD/node_modules/@
         ;;
-      Components)
+      $PWD/node_modules/Components)
         ln -s $PWD/src/components $PWD/node_modules/Components
         ;;
       $PWD/node_modules/Helpers)
