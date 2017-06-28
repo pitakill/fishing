@@ -12,6 +12,18 @@
   width: calc(100% / 11);
 }
 
+.Cell.blue {
+  background-color: rgba(0, 0, 255, 0.9);
+}
+
+.Cell.red {
+  background-color: rgba(255, 0, 0, 0.9);
+}
+
+.Cell.yellow {
+  background-color: rgba(255, 255, 0, 0.9);
+}
+
 .Cell.main {
-  background-color: rgba(100, 100, 100, 1);
+  background-color: rgba(100, 100, 100, 0.9);
 }

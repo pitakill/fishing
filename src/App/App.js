@@ -59,9 +59,9 @@ class App extends React.Component<void, AppProps, AppState> {
   }
 
   render(): React.Element<*> {
-    const {size} = this.props;
     const {selected} = this.state;
-    return (<Grid selected={selected} size={size}/>);
+    const props: AppProps = Object.assign({}, this.props, {selected});
+    return (<Grid {...props}/>);
   }
 }
 
