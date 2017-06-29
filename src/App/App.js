@@ -1,16 +1,34 @@
 // @flow
 import React from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as a from 'Actions';
 import Grid from 'Components/Grid';
+import {moveRandom} from 'Helpers';
 
-type AppProps = Config;
+type AppProps = {
+  actions: {
+    getInitialState: Function,
+    moveBlue: Function,
+    moveToLeft: Function,
+    moveToUp: Function,
+    moveToRight: Function,
+    moveToDown: Function
+  },
+  blue: number,
+  reds: Array<number>,
+  main: number,
+  size: number,
+  yellow: number
+};
+
 type AppState = {
-  selected: number
+  intervalID: number
 };
 
 class App extends React.Component<void, AppProps, AppState> {
-  state: AppState;
-  state = {
-    selected: this.props.selected
+  state: AppState = {
+    intervalID: NaN
   };
 
   keyDown = (e: SyntheticKeyboardEvent): void => {
@@ -20,38 +38,52 @@ class App extends React.Component<void, AppProps, AppState> {
      * 39 - Right
      * 40 - Down
      */
+    const {
+      actions: {
+        moveToLeft,
+        moveToUp,
+        moveToRight,
+        moveToDown
+      },
+      main,
+      size
+    } = this.props;
     const {keyCode: kc} = e;
-    const {size} = this.props;
-    const {selected: selectedState} = this.state;
-    let selected;
     switch(kc) {
       case 37:
-        if (selectedState % size === 1) return;
-        selected = selectedState - 1;
-        this.setState(Object.assign({}, this.state, {selected}));
-        break;
+        if (main % size === 1) return;
+        return moveToLeft(main - 1);
       case 38:
-        if (selectedState <= size) return;
-        selected = selectedState - size;
-        this.setState(Object.assign({}, this.state, {selected}));
-        break;
+        if (main <= size) return;
+        return moveToUp(main - size)
       case 39:
-        if (selectedState % 11 === 0) return;
-        selected = selectedState + 1;
-        this.setState(Object.assign({}, this.state, {selected}));
-        break;
+        if (main % size === 0) return;
+        return moveToRight(main + 1);
       case 40:
-        if (selectedState > size * (size - 1)) return;
-        selected = selectedState + size;
-        this.setState(Object.assign({}, this.state, {selected}));
-        break;
+        if (main > size * (size - 1)) return;
+        return moveToDown(main + size);
       default:
         return;
     }
   }
 
+  moveFishes = (): void => {
+    const {actions: {moveBlue}} = this.props;
+    const intervalID = window.setInterval((): void => {
+      moveRandom(this.props.blue, moveBlue);
+    }, 300);
+
+    this.setState(Object.assign({}, this.state, {intervalID}));
+  }
+
   componentDidMount(): void {
     window.addEventListener('keydown', this.keyDown);
+    this.moveFishes();
+  }
+
+  componentWillMount(): void {
+    const {actions: {getInitialState}} = this.props;
+    getInitialState();
   }
 
   componentWillUmount(): void {
@@ -59,10 +91,22 @@ class App extends React.Component<void, AppProps, AppState> {
   }
 
   render(): React.Element<*> {
-    const {selected} = this.state;
-    const props: AppProps = Object.assign({}, this.props, {selected});
+    const {actions, ...props} = this.props;
     return (<Grid {...props}/>);
   }
 }
 
-export default App;
+const mapStateToProps = (state: Object): Object => ({
+  ...state.getInitialState,
+  blue: state.movingAI.blue,
+  main: state.movingMain.main
+});
+
+const mapDispatchToProps = (dispatch: Function): Object => ({
+  actions: bindActionCreators(a, dispatch)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

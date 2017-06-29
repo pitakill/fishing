@@ -6,7 +6,7 @@ import Cell from 'Components/Cell';
 type GridProps = Config;
 
 const Grid = (props: GridProps): React.Element<*> => {
-  const {blue, reds, selected, size, yellow} = props;
+  const {blue, reds, main, size, yellow} = props;
   const cells = [];
   let globalIterator = 1;
 
@@ -16,7 +16,7 @@ const Grid = (props: GridProps): React.Element<*> => {
         blue: globalIterator === blue,
         id: `cell-${globalIterator}`,
         key: `cell-${globalIterator}`,
-        main: globalIterator === selected,
+        main: globalIterator === main,
         red: reds.includes(globalIterator),
         size,
         yellow: globalIterator === yellow

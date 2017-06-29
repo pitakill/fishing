@@ -1,16 +1,18 @@
 {
-  "homepage" : "https://pitakill.github.io/fishing",
+  "homepage": "https://pitakill.github.io/fishing",
   "name": "fishing",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-redux": "^5.0.5"
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.1"
   },
   "devDependencies": {
     "flow-bin": "^0.48.0",
-    "react-scripts": "1.0.7"
+    "react-scripts": "1.0.7",
+    "redux-logger": "^3.0.6"
   },
   "scripts": {
     "flow": "flow",
