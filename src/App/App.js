@@ -10,6 +10,8 @@ type AppProps = {
   actions: {
     getInitialState: Function,
     moveBlue: Function,
+    moveRed: Function,
+    moveYellow: Function,
     moveToLeft: Function,
     moveToUp: Function,
     moveToRight: Function,
@@ -68,9 +70,15 @@ class App extends React.Component<void, AppProps, AppState> {
   }
 
   moveFishes = (): void => {
-    const {actions: {moveBlue}} = this.props;
+    const {actions: {
+      moveBlue,
+      moveRed,
+      moveYellow
+    }} = this.props;
     const intervalID = window.setInterval((): void => {
       moveRandom(this.props.blue, moveBlue);
+      moveRandom(this.props.reds[0], moveRed);
+      moveRandom(this.props.yellow, moveYellow);
     }, 300);
 
     this.setState(Object.assign({}, this.state, {intervalID}));
@@ -98,8 +106,10 @@ class App extends React.Component<void, AppProps, AppState> {
 
 const mapStateToProps = (state: Object): Object => ({
   ...state.getInitialState,
-  blue: state.movingAI.blue,
-  main: state.movingMain.main
+  blue: state.movingBlue.blue,
+  main: state.movingMain.main,
+  reds: [state.movingRed.red],
+  yellow: state.movingYellow.yellow
 });
 
 const mapDispatchToProps = (dispatch: Function): Object => ({

@@ -32,4 +32,6 @@ type Action =
   }
   // Fishes
   | {type: 'MOVE_BLUE', blue: number}
+  | {type: 'MOVE_RED', red: number}
+  | {type: 'MOVE_YELLOW', yellow: number}
 ;
