@@ -9,6 +9,9 @@ verifyExists() {
       $PWD/node_modules/Actions)
         ln -s $PWD/src/actions $PWD/node_modules/Actions
         ;;
+      $PWD/node_modules/Constants)
+        ln -s $PWD/src/constants $PWD/node_modules/Constants
+        ;;
       $PWD/node_modules/Components)
         ln -s $PWD/src/components $PWD/node_modules/Components
         ;;
@@ -28,7 +31,7 @@ verifyExists() {
   fi
 }
 
-symlinks=(@ Actions Components Helpers Reducers Store)
+symlinks=(@ Actions Components Helpers Reducers Store Constants)
 
 for i in ${symlinks[@]}; do
   verifyExists $PWD/node_modules/$i

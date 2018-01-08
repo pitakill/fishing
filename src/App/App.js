@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import * as a from 'Actions';
 import Grid from 'Components/Grid';
 import {moveRandom} from 'Helpers';
+import {step} from 'Constants';
 
 type AppProps = {
   actions: {
@@ -79,7 +80,7 @@ class App extends React.Component<void, AppProps, AppState> {
       moveRandom(this.props.blue, moveBlue);
       moveRandom(this.props.reds[0], moveRed);
       moveRandom(this.props.yellow, moveYellow);
-    }, 300);
+    }, step);
 
     this.setState(Object.assign({}, this.state, {intervalID}));
   }
